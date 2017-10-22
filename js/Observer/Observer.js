@@ -3,7 +3,5 @@
  * @constructor
  */
 function Observer() {
-    this.Update = function () {
-        
-    }
+    this.Update = function () {}
 }
