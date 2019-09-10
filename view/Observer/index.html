@@ -5,8 +5,8 @@
     <title>Title</title>
 </head>
 <body>
-    <button id="addNewObserver">添加新的观察者</button>
-    <input id="mainCheckbox" type="checkbox" />
+    <button id="addNewObserver">添加新的观察者</button><br/>
+    被观察的主题，选中它以后，会自动给所有的观察者发通知：<input id="mainCheckbox" type="checkbox" />
     <div id="observersContainer"></div>
     <script src="../../js/Observer/ObserverList.js" type="text/javascript"></script>
     <script src="../../js/Observer/Subject.js" type="text/javascript"></script>
@@ -24,15 +24,16 @@
         extend(subject, controlCheckbox);
 
         //点击checkbox会触发通知到观察者上
-        controlCheckbox['onclick'] = new Function('controlCheckbox.Notify(controlCheckbox.checked)');
+        controlCheckbox['onclick'] = function () {
+            controlCheckbox.Notify(controlCheckbox.checked);
+        }
 
         addBtn['onclick'] = AddNewObserver;
 
         //具体观察者 Concrete Observer
         function AddNewObserver() {
             //创建需要添加的新的checkbox
-            let check = document.createElement('input');
-            check.type = 'checkbox';
+            let check = createCheckbox();
 
             //利用Observer类扩展checkbox
             extend(new Observer(),check);
@@ -45,8 +46,14 @@
             //为主subject的观察者列表添加新的观察者
             controlCheckbox.AddObserver(check);
 
-            //将观察者附加到容器上
+            //将观察者的 checkbox 渲染到页面上 -- 与观察者模式无关，仅是页面渲染
             container.appendChild(check);
+        }
+
+        function createCheckbox () {
+            let check = document.createElement('input');
+            check.type = 'checkbox';
+            return check;
         }
     </script>
 </body>
